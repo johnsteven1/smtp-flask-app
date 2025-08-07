@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🄷🄰🅆🄴🄳 ☠️⚠️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #00ff9c;
+      --green-dark: #00c87b;
+      --bg: #0b0c0d;
+      --text: #d2ffd2;
+      --shadow: 0 0 20px #00ff9c55;
+      --red: #ff4e4e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      background: radial-gradient(circle at 30% 30%, #001f1f, #000);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 156, 0.05) 2px, rgba(0, 255, 156, 0.05) 4px);
+      animation: scan 6s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes scan {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100px); }
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid var(--green);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 460px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      animation: fadeIn 1.2s ease;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .logo {
+      font-size: 48px;
+      color: var(--green);
+      margin-bottom: 10px;
+      animation: flicker 2s infinite;
+    }
+
+    .app-title {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: var(--green-dark);
+      text-shadow: 0 0 5px var(--green-dark);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--green);
+      font-size: 0.9rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 8px;
+      background: #0f0f0f;
+      color: #00ff9c;
+      border: 1px solid #00ff9c44;
+      border-radius: 8px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 10px #00ff9c66;
+    }
+
+    .valid {
+      border-color: var(--green);
+    }
+
+    .invalid {
+      border-color: var(--red);
+    }
+
+    .error-message {
+      font-size: 0.8rem;
+      color: var(--red);
+      margin-bottom: 16px;
+      min-height: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: var(--green-dark);
+      color: black;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 12px var(--green-dark);
+      transition: 0.3s ease;
+      margin-top: 12px;
+    }
+
+    button:hover {
+      background: var(--green);
+      transform: scale(1.03);
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      45% { opacity: 0.8; }
+      50% { opacity: 0.5; }
+      55% { opacity: 0.8; }
+      60% { opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 24px 16px;
+      }
+
+      .app-title {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">💀</div>
+      <div class="app-title">H4W3D Terminal ☠️</div>
+    </div>
+
+    <form id="emailForm" action="/send-email" method="post" novalidate>
+      <input type="text" id="to_email" name="to_email" placeholder="e.g. root@a.com, admin@b.com" required>
+      <div id="email-error" class="error-message"></div>
+
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="subject" placeholder="Hack Subject" required>
+
+      <label for="plain_text">Plain Text Message</label>
+      <textarea id="plain_text" name="plain_text" rows="4" placeholder="print('Hello from the grid')" required></textarea>
+
+      <label for="html_text">HTML Content (optional)</label>
+      <textarea id="html_text" name="html_text" rows="5" placeholder="<h1>Pwned</h1><p>Welcome to the system...</p>"></textarea>
+
+      <button type="submit">💾 Deploy Payload</button>
+    </form>
+  </div>
+
+  <script>
+    const emailInput = document.getElementById('to_email');
+    const emailError = document.getElementById('email-error');
+    const form = document.getElementById('emailForm');
+
+    function validateEmails(input) {
+      const emails = input.split(',').map(email => email.trim());
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const invalid = emails.filter(email => !emailRegex.test(email));
+      return {
+        valid: invalid.length === 0,
+        invalidEmails: invalid
+      };
+    }
+
+    emailInput.addEventListener('input', () => {
+      const { valid, invalidEmails } = validateEmails(emailInput.value);
+
+      if (emailInput.value.trim() === '') {
+        emailInput.classList.remove('valid', 'invalid');
+        emailError.textContent = '';
+        return;
+      }
+
+      if (valid) {
+        emailInput.classList.add('valid');
+        emailInput.classList.remove('invalid');
+        emailError.textContent = '';
+      } else {
+        emailInput.classList.add('invalid');
+        emailInput.classList.remove('valid');
+        emailError.textContent = `Invalid email(s): ${invalidEmails.join(', ')}`;
+      }
+    });
+
+    form.addEventListener('submit', function (e) {
+      const { valid, invalidEmails } = validateEmails(emailInput.value);
+      if (!valid) {
+        alert("⚠️ You have invalid email(s):\n" + invalidEmails.join(', '));
+        e.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>
