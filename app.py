@@ -9,8 +9,8 @@ app = Flask(__name__)
 
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 465
-SENDER_EMAIL = "helpsystemmail@gmail.com"
-SENDER_PASSWORD = "fjlzcqmhepmmuiks"
+SENDER_EMAIL = "plievnikiforradislavovich58@gmail.com"
+SENDER_PASSWORD = "yqcqtpnmbxgbajav"
 LOG_FILE = "smtp_web_log.log"
 
 logging.basicConfig(
