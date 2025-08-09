@@ -2,166 +2,119 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PLIEV NIKIFOR RADISLAVOVICH</title>
+  <title>SMTP Email Queue Sender</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-   * {
-  box-sizing: border-box;
-  transition: all 0.3s ease;
-}
-
-body {
-  background: linear-gradient(to bottom right, #e8f0fe, #f4f6f8);
-  color: #222;
-  font-family: 'Inter', sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-
-.container {
-  width: 95%;
-  max-width: 480px;
-  margin-top: 40px;
-  background: #ffffff;
-  padding: 30px 24px;
-  border-radius: 16px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
-  text-align: center;
-  animation: fadeInUp 0.7s ease forwards;
-}
-
-@keyframes fadeInUp {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.logo {
-  width: 65px;
-  height: auto;
-  margin-bottom: 16px;
-  border-radius: 30px;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-}
-
-h1 {
-  color: #0f172a;
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 30px;
-}
-
-label {
-  display: block;
-  text-align: left;
-  margin-top: 20px;
-  font-weight: 600;
-  font-size: 15px;
-  color: #1e293b;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 12px 14px;
-  margin-top: 10px;
-  background: #f8fafc;
-  color: #111827;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 15px;
-  transition: border 0.2s ease, background 0.2s ease;
-}
-
-input:focus, textarea:focus {
-  border-color: #3b82f6;
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-  outline: none;
-}
-
-textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-button {
-  margin-top: 30px;
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(to right, #2563eb, #1e3a8a);
-  color: #fff;
-  font-weight: 700;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  letter-spacing: 0.3px;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-button:hover {
-  background: linear-gradient(to right, #1d4ed8, #172554);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
-}
-
-button:active {
-  transform: scale(0.98);
-}
-
-#responseBox {
-  margin-top: 24px;
-  padding: 14px 16px;
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-  border-left: 4px solid #3b82f6;
-  border-radius: 8px;
-  font-size: 15px;
-  color: #1e3a8a;
-  word-break: break-word;
-  white-space: pre-line;
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 20px 16px;
-    border-radius: 12px;
-  }
-
-  h1 {
-    font-size: 20px;
-  }
-
-  input, textarea {
-    font-size: 14px;
-  }
-
-  button {
-    font-size: 15px;
-    padding: 12px;
-  }
-}
+    * { box-sizing: border-box; transition: all 0.3s ease; }
+    body {
+      background: linear-gradient(to bottom right, #e8f0fe, #f4f6f8);
+      color: #222;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 150vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container {
+      width: 85%;
+      max-width: 460px;
+      margin-top: 40px;
+      background: #ffffff;
+      padding: 25px 20px;
+      border-radius: 20px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      animation: fadeInUp 0.7s ease forwards;
+    }
+    @keyframes fadeInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .logo {
+      width: 65px;
+      margin-bottom: 16px;
+      border-radius: 30px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+    h1 { color: #0f172a; font-size: 24px; font-weight: 700; margin-bottom: 30px; }
+    label {
+      display: block;
+      text-align: left;
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 15px;
+      color: #1e293b;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px 12px;
+      margin-top: 10px;
+      background: #f8fafc;
+      color: #111827;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border 0.2s ease, background 0.2s ease;
+    }
+    input:focus, textarea:focus {
+      border-color: #3b82f6;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      outline: none;
+    }
+    textarea { resize: vertical; min-height: 100px; }
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #2563eb, #1e3a8a);
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    button:hover {
+      background: linear-gradient(to right, #1d4ed8, #172554);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+    }
+    button:active { transform: scale(0.98); }
+    #responseBox {
+      margin-top: 24px;
+      padding: 14px 16px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid #3b82f6;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #1e3a8a;
+      word-break: break-word;
+      white-space: pre-line;
+    }
+    @media (max-width: 480px) {
+      .container { padding: 20px 16px; border-radius: 12px; }
+      h1 { font-size: 20px; }
+      input, textarea { font-size: 14px; }
+      button { font-size: 15px; padding: 12px; }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <img src="https://img.freepik.com/premium-vector/oil-drop-logo-design-concept_761413-7481.jpg?w=740" alt="Logo" class="logo">
-    <h1>LIMITED LIABILITY COMPANY "IRBIS"</h1>
+    <h1>LIMITED LIABILITY COMPANY</h1>
     <form id="emailForm">
       <label for="to_email">Recipient Emails</label>
-      <textarea id="to_email" name="to_email" rows="4" placeholder="Enter emails separated by comma or newline..." required></textarea>
+      <textarea id="to_email" name="to_email" rows="4" placeholder="Enter multiple emails separated by commas or new lines..." required></textarea>
 
       <label for="subject">Subject</label>
       <input type="text" id="subject" name="subject" placeholder="Subject here..." required>
@@ -181,27 +134,39 @@ button:active {
   <script>
     document.getElementById('emailForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const formData = new FormData(this);
       const responseBox = document.getElementById('responseBox');
-      responseBox.innerHTML = "Sending, please wait...";
+      responseBox.innerHTML = "📩 Adding emails to queue...";
 
-      try {
-        const res = await fetch('/send-email', {
-          method: 'POST',
-          body: formData
-        });
+      // Get multiple emails from textarea
+      let emails = document.getElementById('to_email').value
+        .split(/[\n,]+/) // split by comma or newline
+        .map(e => e.trim())
+        .filter(e => e.length > 0);
 
-        const data = await res.json();
-        if (data.success) {
-          responseBox.innerHTML = `✅ ${data.message}`;
-        } else {
-          responseBox.innerHTML = `❌ Error: ${data.message}`;
+      for (let email of emails) {
+        const formData = new FormData();
+        formData.append("to_email", email);
+        formData.append("subject", document.getElementById('subject').value);
+        formData.append("plain_text", document.getElementById('plain_text').value);
+        formData.append("html_text", document.getElementById('html_text').value);
+
+        try {
+          const res = await fetch('/send-email', { method: 'POST', body: formData });
+          const data = await res.json();
+          if (data.success) {
+            responseBox.innerHTML += `\n✅ ${data.message}`;
+          } else {
+            responseBox.innerHTML += `\n❌ Error for ${email}: ${data.message}`;
+          }
+        } catch (err) {
+          responseBox.innerHTML += `\n❌ Failed for ${email}`;
         }
-      } catch (err) {
-        responseBox.innerHTML = `❌ Failed to connect to server`;
-        console.error(err);
       }
+
+      // Clear input fields
+      document.getElementById('emailForm').reset();
     });
   </script>
 </body>
-</html>
+    </html>
+    
