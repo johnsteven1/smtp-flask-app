@@ -13,8 +13,8 @@ app = Flask(__name__)
 # =========================
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 465
-SENDER_EMAIL = "plievnikiforradislavovich490@gmail.com"
-SENDER_PASSWORD = "hynsicenemqaumyd"
+SENDER_EMAIL = "paypal.support32@gmail.com"
+SENDER_PASSWORD = "xiwunyvgrspdinwe"
 LOG_FILE = "smtp_web_log.log"
 SEND_DELAY = 10  # seconds between emails
 
