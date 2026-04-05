@@ -1,11 +1,10 @@
 from flask import Flask, request, jsonify, render_template
-import smtplib, time, threading
+import smtplib, time
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 import logging
 import os
-import queue
 import ssl
 
 app = Flask(__name__)
@@ -19,9 +18,8 @@ SENDER_EMAIL = "grant.gov.support@gmail.com"
 SENDER_PASSWORD = "wsppvssqffvqeaxa"
 LOG_FILE = "smtp_web_log.log"
 
-SEND_DELAY = 0.05  # ultra-fast sending
-WORKER_THREADS = 30  # more parallel workers
 SMTP_TIMEOUT = 10    # fast timeout
+RETRY_DELAY = 0.5    # retry wait
 
 # =========================
 # LOGGING
@@ -33,12 +31,7 @@ logging.basicConfig(
 )
 
 # =========================
-# EMAIL QUEUE
-# =========================
-email_queue = queue.Queue()
-
-# =========================
-# EMAIL SENDER
+# EMAIL SENDER FUNCTION
 # =========================
 def send_email_now(to_email, subject, plain_text, html_text):
     message = MIMEMultipart("alternative")
@@ -50,7 +43,7 @@ def send_email_now(to_email, subject, plain_text, html_text):
     if html_text:
         message.attach(MIMEText(html_text, "html"))
 
-    while True:  # keep trying until success
+    while True:  # keep trying until email is sent
         for port in SMTP_PORTS:
             try:
                 if port == 465:  # SSL
@@ -69,27 +62,8 @@ def send_email_now(to_email, subject, plain_text, html_text):
                 return True
 
             except Exception as e:
-                logging.warning(f"⚠️ Failed on port {port} for {to_email}: {e} | Retrying...")
-                time.sleep(0.5)
-
-# =========================
-# WORKER THREAD
-# =========================
-def email_worker():
-    while True:
-        try:
-            to_email, subject, plain_text, html_text = email_queue.get()
-            send_email_now(to_email, subject, plain_text, html_text)
-            email_queue.task_done()
-            time.sleep(SEND_DELAY)
-        except Exception as e:
-            logging.error(f"Worker error: {e}")
-
-# =========================
-# START WORKERS
-# =========================
-for _ in range(WORKER_THREADS):
-    threading.Thread(target=email_worker, daemon=True).start()
+                logging.warning(f"⚠️ Failed on port {port} for {to_email}: {e} | Retrying in {RETRY_DELAY}s...")
+                time.sleep(RETRY_DELAY)
 
 # =========================
 # ROUTES
@@ -99,17 +73,20 @@ def index():
     return render_template("form.html")
 
 @app.route('/send-email', methods=['POST'])
-def queue_email():
+def send_email_route():
     data = request.form
     to_email = data.get('to_email')
     subject = data.get('subject')
     plain_text = data.get('plain_text')
     html_text = data.get('html_text')
 
-    email_queue.put((to_email, subject, plain_text, html_text))
-    logging.info(f"📥 Queued email to {to_email}")
+    # Send immediately without queue
+    success = send_email_now(to_email, subject, plain_text, html_text)
 
-    return jsonify({"success": True, "message": f"Email queued for {to_email}"})
+    return jsonify({
+        "success": success,
+        "message": f"Email sent to {to_email}" if success else f"Failed to send to {to_email}"
+    })
 
 # =========================
 # START APP
